@@ -6,12 +6,12 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type URLMap struct {
+type shortMap struct {
 	Path string `yaml:"path"`
 	URL  string `yaml:"url"`
 }
 
-func buildMap(paths []URLMap) map[string]string {
+func buildMap(paths []shortMap) map[string]string {
 	pathMap := make(map[string]string)
 
 	for _, path := range paths {
@@ -55,7 +55,7 @@ func MapHandler(pathsToUrls map[string]string, fallback http.Handler) http.Handl
 // See MapHandler to create a similar http.HandlerFunc via
 // a mapping of paths to urls.
 func YAMLHandler(yml []byte, fallback http.Handler) (http.HandlerFunc, error) {
-	var paths []URLMap
+	var paths []shortMap
 	err := yaml.Unmarshal(yml, &paths)
 	if err != nil {
 		return nil, err
